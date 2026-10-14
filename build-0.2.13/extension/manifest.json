@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "Pyrite",
+  "description": "Checks whether a memecoin's site and X claims are true.",
+  "version": "0.2.13",
+  "icons": {
+    "16": "icon/16.png",
+    "32": "icon/32.png",
+    "48": "icon/48.png",
+    "128": "icon/128.png"
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAy6W4Gu0gZMcDV4zF3ztgtnDAwnKg3qWewpSejYThMdLzlsMsuWqL68HVoXcx43raB2D6GKkQ2WOF7+JBgKWO+k4YqR5WNeACn698wezUxRzOOclyRlKlzHVsHITH9lUESAWnzkfurut/+t8zwD1SDUAflCLeFos3/VgTd3W8/hLCfH4NxN2QU77DN98SR1i5VOuTpDiIRoYn7PAlzKhr1sVOQ0GZFO4EsXFr4fQN1IdKTwzGUCtMl/pqUjsQ9XBX5SkRR3Q2CLtKn8KV2bu5MJBWmyfa5VPCC0o902JZ+PGB3DP/YkpGTLoGCmhRhhsYIvQFdBZ8h2nu4AkKdnx+JQIDAQAB",
+  "permissions": [
+    "storage",
+    "nativeMessaging"
+  ],
+  "host_permissions": [
+    "https://*/*"
+  ],
+  "action": {
+    "default_icon": {
+      "16": "icon/16.png",
+      "32": "icon/32.png",
+      "48": "icon/48.png",
+      "128": "icon/128.png"
+    },
+    "default_title": "Pyrite",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.axiom.trade/*",
+        "https://axiom.trade/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "content-scripts/content.js"
+      ]
+    }
+  ]
+}

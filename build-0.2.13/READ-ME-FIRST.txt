@@ -1,0 +1,63 @@
+PYRITE SETUP: 4 STEPS
+
+EASIEST: LET CLAUDE DO IT
+Extract the zip, open the new folder in a terminal, run claude, and
+say "set up Pyrite". Claude reads CLAUDE.md in this folder, runs the
+installer, checks it, and tells you the few clicks only you can do
+in Edge. Or follow the four steps below yourself.
+
+Step 1: Right-click pyrite-trial.zip, choose Properties, tick
+        Unblock at the bottom, click OK. Then right-click the zip
+        again, choose Extract All, click Extract. Unblock first, or
+        Windows (Smart App Control) refuses to run the installer.
+
+Step 2: Open the new folder and double-click "Install Pyrite.cmd".
+        If Windows warns you, click More info, then Run anyway (or
+        Run, if that's the only button). A black window sets
+        everything up. It can sit quiet for a few minutes. Leave it
+        open.
+
+Step 3: If a Claude window opens, press Enter until it asks how to
+        log in. Choose "Claude account with subscription", then log
+        in and click Authorize in the browser that opens. Back in the
+        Claude window, press Enter until you see a box to type in,
+        then close that window. The installer carries on.
+
+Step 4: Edge opens on its extensions page (it may be behind the
+        black window; Chrome only if Edge is not installed). Turn
+        on Developer mode (Edge: left side, near the bottom;
+        Chrome: top right). Click Load unpacked. In the window
+        that opens, click the Folder box at the bottom, press
+        Ctrl+V (the folder is already copied), press Enter, then
+        click Select Folder.
+
+Done. Open axiom.trade and click any coin. After a few seconds a
+small pill appears near the top toolbar: the site's age and any red
+flags. The silver magnifier on it runs a deep check with Claude.
+
+At the end of the day, click the puzzle-piece icon next to the
+address bar, then Pyrite, then Copy report. Paste it into a message
+back. It has nothing personal in it.
+
+IF SOMETHING LOOKS DIFFERENT
+- The black window says FAIL: send a screenshot. If Edge still
+  opened, carry on with Step 4.
+- "Smart App Control blocked" or Windows won't run the file:
+  delete the extracted folder and do Step 1 again, Unblock first.
+- Still blocked, or no Unblock box: Windows Security, App & browser
+  control, Smart App Control settings, Off. Windows can't turn it
+  back on without a reset, so only do this if you're fine with that.
+- The browser shows a code after Authorize: copy it, paste it into
+  the Claude window and press Enter.
+- Edge didn't open: open it and type edge://extensions in the
+  address bar.
+- Edge offers to turn off developer-mode extensions: click Cancel.
+- Using Chrome instead: the same steps work at chrome://extensions.
+- Anything else: stop and send a screenshot.
+
+GOOD TO KNOW
+- Each deep check uses your Claude plan. On Pro the five-hour
+  allowance can run out after a handful of them.
+- Optional: a free key from dashboard.helius.dev turns on the
+  on-chain checks. Click the puzzle piece, then Pyrite, paste the
+  key and click Save.

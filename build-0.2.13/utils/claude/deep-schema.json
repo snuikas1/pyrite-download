@@ -1,0 +1,122 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["facts", "claims", "tech", "summary", "story_link", "red_flags"],
+  "properties": {
+    "facts": {
+      "type": "array",
+      "description": "Up to 6 checkable facts the coin itself states or visibly rests on, taken from the evidence, the story's before the coin's: first the fact that decides the answer (a likely-false story fact, if any), then the most load-bearing. Empty when the evidence states none.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["fact", "quote", "source_in_evidence", "about", "opinion", "why", "sources"],
+        "properties": {
+          "fact": { "type": "string", "description": "80 characters at most: one specific, checkable statement the coin makes or rests on, in short plain words that true or false answers." },
+          "quote": { "type": "string", "description": "120 characters at most: the evidence words the fact rests on, copied exactly from the input. A coin fact quotes the coin's own words. A fact with no such words is left out." },
+          "source_in_evidence": {
+            "type": "string",
+            "description": "Where the coin says it: its X post or the post that quotes or is quoted, an X Article, its website, its token description, or elsewhere.",
+            "enum": ["x_post", "x_article", "site", "description", "other"]
+          },
+          "about": {
+            "type": "string",
+            "description": "story: the news, event or people the coin rests on (did it happen, is the person who they say). coin: what the coin's own words claim about the coin (that someone made, backs or holds it, or a promise such as \"X will claim the fees\"). Whether the coin is tied to the story goes in story_link, never here.",
+            "enum": ["story", "coin"]
+          },
+          "opinion": {
+            "type": "string",
+            "description": "likely_true when an independent source checked or witnessed it, or an organisation's or person's own official post or site states its own plain fact (a name, a date, a release, an event it held); likely_false when sources contradict it; self_claimed when the only support is the subject's own word for a boast, an endorsement or a claim about the coin, or outlets repeating it unchecked; unclear when nothing solid was found.",
+            "enum": ["likely_true", "likely_false", "unclear", "self_claimed"]
+          },
+          "why": { "type": "string", "description": "One plain sentence, 140 characters at most: what the research found." },
+          "sources": {
+            "type": "array",
+            "description": "Up to 4 pages found in this research that back the opinion. Never an invented url.",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["url", "title"],
+              "properties": {
+                "url": { "type": "string", "description": "The page's full http or https address." },
+                "title": { "type": "string", "description": "The page's title." }
+              }
+            }
+          }
+        }
+      }
+    },
+    "claims": {
+      "type": "array",
+      "description": "One entry per <claim> in <claims>, in the same order. Empty when there are none.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["quote", "opinion", "why", "sources"],
+        "properties": {
+          "quote": { "type": "string", "description": "The claim's text, copied exactly from its <claim> tag." },
+          "opinion": {
+            "type": "string",
+            "description": "likely_true when independent sources support it, likely_false when they contradict it, unclear when nothing solid was found.",
+            "enum": ["likely_true", "likely_false", "unclear"]
+          },
+          "why": { "type": "string", "description": "One plain sentence, 140 characters at most: what the research found." },
+          "sources": {
+            "type": "array",
+            "description": "Up to 4 pages found in this research that back the opinion. Never an invented url.",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["url", "title"],
+              "properties": {
+                "url": { "type": "string", "description": "The page's full http or https address." },
+                "title": { "type": "string", "description": "The page's title." }
+              }
+            }
+          }
+        }
+      }
+    },
+    "tech": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Your rating of the product or technology the coin claims: whether it exists and works as said, and whether anyone would find it useful beyond trading this coin. Price, hype and the coin's market are not part of it.",
+      "required": ["score", "why", "sources"],
+      "properties": {
+        "score": {
+          "type": ["integer", "null"],
+          "description": "1 to 10 by the prompt's anchors. null when the coin claims no product or technology: a meme, a story or a community is not tech."
+        },
+        "why": { "type": "string", "description": "One plain sentence, 140 characters at most: what the research found." },
+        "sources": {
+          "type": "array",
+          "description": "Up to 4 pages found in this research that back the score. Never an invented url.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["url", "title"],
+            "properties": {
+              "url": { "type": "string", "description": "The page's full http or https address." },
+              "title": { "type": "string", "description": "The page's title." }
+            }
+          }
+        }
+      }
+    },
+    "summary": { "type": "string", "description": "One plain sentence, 160 characters at most, written after the facts: it opens with the answer the prompt's rule gives for them, then the reason that decides it." },
+    "story_link": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "description": "Whether the coin is tied to the story or article it rests on. null when the coin rests on no story.",
+      "required": ["status", "why"],
+      "properties": {
+        "status": { "type": "string", "enum": ["tied", "named_after", "not_tied"], "description": "tied: someone in the story (the article, the linked post's author, the people or outlet in it) names, backs or made the coin, shown by a source found in this research. named_after: the coin takes its name, ticker, picture or words from the story, but nobody in the story is shown to be tied to it. not_tied: the coin's name, picture and words do not match the story it links." },
+        "why": { "type": "string", "description": "One plain sentence, 140 characters at most: what ties the coin to the story, or what is missing." }
+      }
+    },
+    "red_flags": {
+      "type": "array",
+      "description": "Up to 3 short plain phrases a buyer should know, 50 characters at most each, the most serious first. Empty when there are none.",
+      "items": { "type": "string" }
+    }
+  }
+}
