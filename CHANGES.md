@@ -1,3 +1,22 @@
+# Pyrite 0.2.14 (test build, not released)
+
+Built on 2026-10-15 by Apis (Claude) from 0.2.13, for speed. Exactly four files differ from 0.2.13, each edit commented.
+Checked on the owner's Windows PC: bridge `--selftest` all PASS, and two real deep checks through the installed bridge
+(44 s and 47 s, story facts kept). Not yet run in the browser.
+
+- `pyrite-trial-0.2.14.zip`: same layout as the release zips. `build-0.2.14/`: the same files unpacked.
+- Extension ID and manifest `key` unchanged (`hegfbajilkihmgclmnajpkhckogfplni`).
+
+| # | What changed | Why | File |
+|---|---|---|---|
+| 1 | **The "settle" second pass no longer runs.** | Measured: it ran on 7 of 9 checks, added 16-43 s (about 28 s), and changed the headline answer 1 time in 4. A check is now one pass of about 45 s instead of about 35 s plus a second pass. | `extension/background.js` (`zi`) |
+| 2 | **x.com / twitter.com reads go to fxtwitter's API** (posts, `/i/status`, `/i/web/status`, accounts). X's own pages and lookalike domains are left alone. | X pages need a browser, so every such read came back empty and wasted a lookup. | `bridge/pyrite-bridge.mjs` (`xRead`) |
+| 3 | The prompt tells Claude to open with three or four lookups at once and keep batching. | Each research step costs about 9 s whatever its size; more lookups per step means more research in the same time. | `utils/claude/deep-system-prompt.md` |
+| 4 | Version 0.2.13 → 0.2.14. | | `extension/manifest.json` |
+
+Tested and rejected: effort `medium` (twice as fast, but it stopped after 2 lookups and missed the source post in 3 of 4 runs).
+Note: `install-windows.ps1` still defaults to `-Model claude-opus-5-5`; pass `-Model claude-sonnet-5-5` to keep a Sonnet install on Sonnet.
+
 # Pyrite 0.2.13 (test build, not released)
 
 Built on 2026-10-14 by Apis (Claude) from the shipped v0.2.12 release zip, because the source code is lost.

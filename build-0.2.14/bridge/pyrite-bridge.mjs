@@ -716,6 +716,24 @@ function noteEvent(c, ev) {
   return true;
 }
 
+// An x.com or twitter.com page needs a browser, so a read of one comes back empty and wastes a step.
+// The same post or account is read from fxtwitter's public API instead, before the lookup is judged.
+const X_HOST = /^(?:www\.|mobile\.)?(?:x|twitter)\.com$/i;
+// X's own pages, never an account
+const X_RESERVED = new Set(['home', 'search', 'explore', 'hashtag', 'settings', 'notifications', 'messages', 'compose', 'intent', 'share', 'login', 'signup', 'tos', 'privacy', 'about']);
+export function xRead(req) {
+  if (req?.subtype !== 'can_use_tool' || req.tool_name !== 'WebFetch' || typeof req.input?.url !== 'string') return req;
+  let u;
+  try { u = new URL(req.input.url); } catch { return req; }
+  if (!X_HOST.test(u.hostname)) return req;
+  // x.com/i/web/status/<id> is the same post as x.com/i/status/<id>
+  const [user, kind, id] = u.pathname.replace(/^\/i\/web\//, '/i/').split('/').filter(Boolean);
+  let path = null;
+  if (user && !X_RESERVED.has(user.toLowerCase()) && kind === 'status' && /^\d+$/.test(id ?? '')) path = `${user}/status/${id}`;
+  else if (user && user !== 'i' && !X_RESERVED.has(user.toLowerCase()) && kind === undefined && /^[A-Za-z0-9_]{1,15}$/.test(user)) path = user;
+  return path === null ? req : { ...req, input: { ...req.input, url: `https://api.fxtwitter.com/${path}` } };
+}
+
 // ---------- the host ----------
 
 export function runHost(here) {
@@ -1006,7 +1024,7 @@ export function runHost(here) {
   // the child never waits on the bridge. A lookup allowed is told to the extension as it starts
   // (lookupStep); a refused one is not.
   function answerChild(c, ev) {
-    const req = ev.request;
+    const req = xRead(ev.request);
     let response = null;
     if (req?.subtype === 'can_use_tool') {
       const why = c.init ? lookupRefusal(req, c.lookups.allowed, c.email, c.limit) : 'not before the init event';
